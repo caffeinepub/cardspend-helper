@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Expense-tracking helper app to manage multiple credit card accounts, import card statements via per-card CSV mappings, map card categories to custom categories, review transactions for copy/paste export, and clear/reset processed data (no long-term storage).",
+  "architectural_notes": [
+    "Data is intended to be temporary: process uploaded statements, allow copy/paste export, and support clearing old data via reset (not long-term storage).",
+    "CSV import rules/mappings are per credit-card account and must be configurable in-app.",
+    "Per-transaction category overrides are temporary (in-memory/session) and are cleared when the user resets/clears processed data; overrides must propagate immediately to export output.",
+    "Add Needs/Wants as an attribute on custom categories; transactions should derive Needs/Wants from the assigned custom category by default, with optional per-transaction override."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-cards-manager-page-that-lists-credit-card-accounts-and-allows-users-to-add-edit-and-delete-cards-including-setting-a-distinct-color-per-card",
+      "title": "Create a Cards Manager page that lists credit card accounts and allows users to add, edit, and delete cards, including setting a distinct color per card.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-statement-upload-on-the-cards-manager-page-per-card-with-a-simple-visual-cue-showing-uploaded-vs-not-uploaded-using-color-styling",
+      "title": "Implement statement upload on the Cards Manager page per card with a simple visual cue showing “uploaded” vs “not uploaded” using color styling.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-reset-action-that-clears-the-current-processed-imported-transactions-and-returns-cards-to-a-not-uploaded-state-without-deleting-the-cards-themselves",
+      "title": "Add a Reset action that clears the current processed/imported transactions and returns cards to a “not uploaded” state (without deleting the cards themselves).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-transactions-page-that-displays-imported-transactions-and-shows-each-transaction-s-assigned-custom-category-custom-categories-are-managed-in-settings",
+      "title": "Create a Transactions page that displays imported transactions and shows each transaction’s assigned custom category (custom categories are managed in Settings).",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-copy-paste-friendly-export-view-on-the-transactions-page-so-the-user-can-copy-the-cleaned-categorized-output-for-use-in-a-google-sheet-format-can-be-simple-and-adjustable-later",
+      "title": "Provide a copy/paste-friendly export view on the Transactions page so the user can copy the cleaned/categorized output for use in a Google Sheet (format can be simple and adjustable later).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-settings-page-to-manage-a-custom-categories-b-mapping-from-card-provided-categories-to-custom-categories-many-to-one-and-c-per-card-csv-column-mapping-configuration-since-each-card-s-csv-format-can-differ",
+      "title": "Create a Settings page to manage (a) custom categories, (b) mapping from card-provided categories to custom categories (many-to-one), and (c) per-card CSV column mapping configuration (since each card’s CSV format can differ).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-csv-import-processing-such-that-uploading-a-statement-for-a-card-uses-that-card-s-configured-csv-column-mapping-and-produces-a-temporary-in-app-transaction-set-intended-for-review-export-not-long-term-storage",
+      "title": "Implement CSV import processing such that uploading a statement for a card uses that card’s configured CSV column mapping and produces a temporary in-app transaction set (intended for review/export, not long-term storage).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-clear-navigation-between-the-three-primary-pages-cards-manager-transactions-and-settings",
+      "title": "Add clear navigation between the three primary pages: Cards Manager, Transactions, and Settings.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-cohesive-distinct-visual-theme-across-the-app-colors-typography-spacing-and-component-styling-appropriate-for-a-personal-finance-helper-avoiding-blue-purple-as-the-dominant-palette",
+      "title": "Apply a cohesive, distinct visual theme across the app (colors, typography, spacing, and component styling) appropriate for a personal finance helper, avoiding blue/purple as the dominant palette.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-per-transaction-manual-category-override-control-on-the-transactions-page-that-lets-the-user-replace-the-auto-assigned-category-with-a-selection-from-existing-custom-categories-only",
+      "title": "Add a per-transaction manual category override control on the Transactions page that lets the user replace the auto-assigned category with a selection from existing custom categories only.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-manual-category-overrides-are-temporary-ui-state-not-persisted-to-the-backend-and-are-cleared-when-imported-transactions-are-cleared-reset",
+      "title": "Ensure manual category overrides are temporary UI state (not persisted to the backend) and are cleared when imported transactions are cleared/reset.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-export-view-on-the-transactions-page-so-that-it-immediately-uses-any-manual-category-overrides-when-generating-the-export-text",
+      "title": "Update the export view on the Transactions page so that it immediately uses any manual category overrides when generating the export text.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-settings-custom-categories-ui-to-allow-setting-needs-wants-via-a-toggle-for-each-custom-category-persisting-changes-to-the-backend",
+      "title": "Update the Settings > Custom Categories UI to allow setting Needs/Wants via a toggle for each custom category, persisting changes to the backend.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-automatically-apply-needs-wants-to-transactions-based-on-the-transaction-s-effective-custom-category-including-any-per-transaction-category-override-and-display-the-resulting-need-want-label-on-the-transactions-page",
+      "title": "Automatically apply Needs/Wants to transactions based on the transaction’s effective custom category (including any per-transaction category override), and display the resulting Need/Want label on the Transactions page.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-per-transaction-needs-wants-override-control-on-the-transactions-page-so-a-user-can-override-the-auto-derived-need-want-label-for-an-individual-transaction-when-needed",
+      "title": "Add a per-transaction Needs/Wants override control on the Transactions page so a user can override the auto-derived Need/Want label for an individual transaction when needed.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-per-transaction-needs-wants-overrides-are-temporary-ui-only-state-not-persisted-to-the-backend-and-are-cleared-when-transactions-are-cleared-reset-consistent-with-existing-per-transaction-category-overrides-behavior",
+      "title": "Ensure per-transaction Needs/Wants overrides are temporary UI-only state (not persisted to the backend) and are cleared when transactions are cleared/reset, consistent with existing per-transaction category overrides behavior.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Cards Manager page: add/edit/delete credit card accounts, customize colors, upload statements per card, show uploaded/not-uploaded visual cue, and provide reset button to clear processed data",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Transactions page: display imported transactions categorized using user-defined custom categories for review and copy/paste output",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Settings page: create/manage custom categories and map card-provided categories to custom categories (many-to-one)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Per-card CSV import configuration: allow each credit card account to have its own configurable CSV column mapping handled via Settings",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Transactions page: allow temporary per-transaction manual override of the assigned custom category (select from existing categories only) and have overrides immediately update the export view; cleared on reset",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add Needs/Wants classification: in Settings, each custom category has a Need/Want toggle; transactions inherit the Need/Want label from their assigned custom category automatically, with an option to override per transaction if needed",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Extend the backend custom category model to store a Needs/Wants classification per custom category, and expose it via the canister API so the frontend can read and update it.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Add conditional backend migration logic to safely upgrade existing persisted custom categories (currently stored as id -> name) to the new structure that includes Needs/Wants classification.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "CardSpend Helper",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

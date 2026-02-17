@@ -1,0 +1,109 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T20:01:21.592Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 6,
+    "implemented": 4,
+    "items": [
+      {
+        "id": "REQ-13",
+        "summary": "Extend the backend custom category model to store a Needs/Wants classification per custom category, and expose it via the canister API so the frontend can read and update it.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-14",
+        "summary": "Add conditional backend migration logic to safely upgrade existing persisted custom categories (currently stored as id -> name) to the new structure that includes Needs/Wants classification.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Update the Settings > Custom Categories UI to allow setting Needs/Wants via a toggle for each custom category, persisting changes to the backend.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/settings/CustomCategoriesManager.tsx",
+          "frontend/src/components/settings/CategoryMappingsEditor.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/components/settings/CustomCategoriesManager.tsx",
+          "frontend/src/components/settings/CategoryMappingsEditor.tsx"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Automatically apply Needs/Wants to transactions based on the transaction’s effective custom category (including any per-transaction category override), and display the resulting Need/Want label on the Transactions page.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/transactions/TransactionsTable.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/transactions/TransactionsTable.tsx"
+        ]
+      },
+      {
+        "id": "REQ-17",
+        "summary": "Add a per-transaction Needs/Wants override control on the Transactions page so a user can override the auto-derived Need/Want label for an individual transaction when needed.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/state/transactionNeedWantOverrides.ts",
+          "frontend/src/components/transactions/TransactionsTable.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/state/transactionNeedWantOverrides.ts",
+          "frontend/src/components/transactions/TransactionsTable.tsx"
+        ]
+      },
+      {
+        "id": "REQ-18",
+        "summary": "Ensure per-transaction Needs/Wants overrides are temporary UI-only state (not persisted to the backend) and are cleared when transactions are cleared/reset, consistent with existing per-transaction category overrides behavior.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/state/transactionNeedWantOverrides.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/state/transactionNeedWantOverrides.ts"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/settings/CategoryMappingsEditor.tsx",
+    "frontend/src/components/settings/CustomCategoriesManager.tsx",
+    "frontend/src/components/transactions/TransactionsExport.tsx",
+    "frontend/src/components/transactions/TransactionsTable.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/transactionsExport.ts",
+    "frontend/src/state/transactionNeedWantOverrides.ts",
+    "frontend/src/utils/urlParams.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "kind": "build_request",
+  "title": "Add Needs/Wants classification for custom categories with per-transaction override",
+  "projectName": "CardSpend Helper",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-13",
+      "text": "Extend the backend custom category model to store a Needs/Wants classification per custom category, and expose it via the canister API so the frontend can read and update it.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "toggle is okay. 2. yes 3. sure still give me the option to override just in case"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores a Needs/Wants value for each custom category in addition to the category name.",
+        "`getCustomCategories` returns enough data for the frontend to render each category’s name and its Needs/Wants value.",
+        "Backend provides an update method to change a category’s Needs/Wants value without changing the category id or name.",
+        "Existing category IDs and names remain intact after upgrade."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Add conditional backend migration logic to safely upgrade existing persisted custom categories (currently stored as id -> name) to the new structure that includes Needs/Wants classification.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "toggle is okay. 2. yes 3. sure still give me the option to override just in case"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On upgrade, previously created categories still appear with the same names and IDs.",
+        "Migrated categories receive a deterministic default Needs/Wants value (documented in code) so the UI can display a valid state immediately.",
+        "No migration is generated/executed if not needed per the project’s conditional migration policy."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Update the Settings > Custom Categories UI to allow setting Needs/Wants via a toggle for each custom category, persisting changes to the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "toggle is okay"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each custom category row shows its current Needs/Wants state and a toggle control to switch between Need and Want.",
+        "Toggling a category updates the backend and the UI reflects the new state after the mutation completes.",
+        "User-facing labels use clear English text: “Need” and “Want”."
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Automatically apply Needs/Wants to transactions based on the transaction’s effective custom category (including any per-transaction category override), and display the resulting Need/Want label on the Transactions page.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "2. yes"
+        ]
+      },
+      "acceptanceCriteria": [
+        "For each transaction, the displayed Need/Want label matches the Need/Want value of the transaction’s effective category (original category unless overridden).",
+        "If a transaction’s category is unmapped or the category cannot be found, the Need/Want label displays an explicit fallback state (e.g., “Unassigned”).",
+        "Needs/Wants display updates immediately when the user changes a transaction’s category override."
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Add a per-transaction Needs/Wants override control on the Transactions page so a user can override the auto-derived Need/Want label for an individual transaction when needed.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "3. sure still give me the option to override just in case"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each transaction row includes a control to override Needs/Wants for that transaction (Need vs Want), independent of the category override.",
+        "When set, the transaction shows it is overridden (e.g., via badge styling or an “Overridden” indicator) and uses the overridden value for display.",
+        "There is a way to revert a transaction back to “Auto” (derived from the category) so overrides are not permanent."
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "text": "Ensure per-transaction Needs/Wants overrides are temporary UI-only state (not persisted to the backend) and are cleared when transactions are cleared/reset, consistent with existing per-transaction category overrides behavior.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-user-1"
+        ],
+        "quotes": [
+          "sure still give me the option to override just in case"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Needs/Wants per-transaction overrides are stored only in frontend state (similar to the existing category override store) and are not written to the backend.",
+        "Triggering the existing Reset action clears Needs/Wants overrides along with other temporary transaction-related UI state.",
+        "After reset, if transactions are re-imported, Needs/Wants values are again derived from category settings unless re-overridden."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in backend/main.mo; use backend/migration.mo only if required for state upgrade.",
+    "Do not edit files under frontend/src/components/ui or any frontend immutablePaths listed in SYSTEM_CONTEXT; compose existing UI components instead.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Do not add new authentication methods beyond Internet Identity.",
+    "Do not add long-term storage/history of transactions beyond the app’s existing temporary import/review/export workflow.",
+    "Do not introduce external databases or third-party APIs."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

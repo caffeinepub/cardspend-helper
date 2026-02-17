@@ -1,0 +1,85 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-the-settings-custom-categories-ui-to-allow-setting-needs-wants-via-a-toggle-for-each-custom-category-persisting-changes-to-the-backend",
+      "featureTitle": "Update the Settings > Custom Categories UI to allow setting Needs/Wants via a toggle for each custom category, persisting changes to the backend.",
+      "files": [
+        "frontend/src/components/settings/CategoryMappingsEditor.tsx",
+        "frontend/src/components/settings/CustomCategoriesManager.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-automatically-apply-needs-wants-to-transactions-based-on-the-transaction-s-effective-custom-category-including-any-per-transaction-category-override-and-display-the-resulting-need-want-label-on-the-transactions-page",
+      "featureTitle": "Automatically apply Needs/Wants to transactions based on the transaction’s effective custom category (including any per-transaction category override), and display the resulting Need/Want label on the Transactions page.",
+      "files": [
+        "frontend/src/components/transactions/TransactionsTable.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-per-transaction-needs-wants-override-control-on-the-transactions-page-so-a-user-can-override-the-auto-derived-need-want-label-for-an-individual-transaction-when-needed",
+      "featureTitle": "Add a per-transaction Needs/Wants override control on the Transactions page so a user can override the auto-derived Need/Want label for an individual transaction when needed.",
+      "files": [
+        "frontend/src/components/transactions/TransactionsTable.tsx",
+        "frontend/src/state/transactionNeedWantOverrides.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-per-transaction-needs-wants-overrides-are-temporary-ui-only-state-not-persisted-to-the-backend-and-are-cleared-when-transactions-are-cleared-reset-consistent-with-existing-per-transaction-category-overrides-behavior",
+      "featureTitle": "Ensure per-transaction Needs/Wants overrides are temporary UI-only state (not persisted to the backend) and are cleared when transactions are cleared/reset, consistent with existing per-transaction category overrides behavior.",
+      "files": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/state/transactionNeedWantOverrides.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Needs/Wants classification and per-transaction override (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-15",
+      "summary": "Update Settings > Custom Categories to show and edit each category’s Need/Want classification via a toggle-like control and persist changes.",
+      "acceptanceCriteria": [
+        "Each custom category row shows its current Needs/Wants state and a toggle control to switch between Need and Want.",
+        "Toggling a category updates the backend and the UI reflects the new state after the mutation completes.",
+        "User-facing labels use clear English text: “Need” and “Want”."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Update custom-categories query typing to use the canister’s CustomCategory objects (id, name, categoryType) and add a mutation wrapper for updating a category’s categoryType. Also update addCustomCategory mutation to pass an initial categoryType when creating new categories. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/settings/CustomCategoriesManager.tsx",
+          "operation": "modify",
+          "description": "Render custom categories using the new data shape and add a per-row Need/Want toggle-like UI (e.g., two-state buttons or select) that calls the update mutation and updates the list state after completion. Use shadcn-ui primitives already present (e.g., Button/Badge/Card) to compose the toggle without editing immutable ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/settings/CategoryMappingsEditor.tsx",
+          "operation": "modify",
+          "description": "Adjust custom category rendering/lookup to the new CustomCategory shape (id/name/categoryType) while preserving existing mapping creation flow. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Derive and display a Need/Want label per transaction from the transaction’s effective category (including category overrides), with an explicit fallback when unmapped.",
+      "acceptanceCriteria": [
+        "For each transaction, the displayed Need/Want label matches the Need/Want value of the transaction’s effective category (original category unless overridden).",
+        "If a transaction’s category is unmapped or the category cannot be found, the Need/Want label displays an explicit fallback state (e.g., “Unassigned”).",
+        "Needs/Wants display updates immediately when the user changes a transaction’s category override."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/transactions/TransactionsTable.tsx",
+          "operation": "modify",
+          "description": "Update category data usage to the CustomCategory shape; compute each transaction’s effective category (existing override logic), derive Need/Want from the effective category’s categoryType, and display a clear “Need”/“Want” label with a visible fallback “Unassigned” when not found. Add a dedicated column or badge in the table for the Need/Want label. Use shadcn-ui Table/Badge components already used in this view. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "summary": "Add a per-transaction Need/Want override control (Auto/Need/Want) on the Transactions page that visually indicates overridden state.",
+      "acceptanceCriteria": [
+        "Each transaction row includes a control to override Needs/Wants for that transaction (Need vs Want), independent of the category override.",
+        "When set, the transaction shows it is overridden (e.g., via badge styling or an “Overridden” indicator) and uses the overridden value for display.",
+        "There is a way to revert a transaction back to “Auto” (derived from the category) so overrides are not permanent."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/state/transactionNeedWantOverrides.ts",
+          "operation": "create",
+          "description": "Create a Zustand store mirroring the existing per-transaction category override pattern, keyed by the same deterministic transaction key, to hold UI-only Needs/Wants overrides with three states: Auto, Need, Want. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/transactions/TransactionsTable.tsx",
+          "operation": "modify",
+          "description": "Add an override control per row for Need/Want (including an “Auto” option), store selection in the new UI-only override store, and ensure the displayed Need/Want label uses the override when set. Add an “Overridden” indicator (e.g., badge variant/text) when not Auto. Compose using existing shadcn-ui Select/Badge/Table components already in use. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Keep per-transaction Needs/Wants overrides as temporary UI-only state and clear them on the existing Reset flow, matching category override behavior.",
+      "acceptanceCriteria": [
+        "Needs/Wants per-transaction overrides are stored only in frontend state (similar to the existing category override store) and are not written to the backend.",
+        "Triggering the existing Reset action clears Needs/Wants overrides along with other temporary transaction-related UI state.",
+        "After reset, if transactions are re-imported, Needs/Wants values are again derived from category settings unless re-overridden."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Extend the existing reset mutation success handler to also clear the new per-transaction Needs/Wants overrides store alongside upload status and category overrides, ensuring parity with current reset behavior. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/state/transactionNeedWantOverrides.ts",
+          "operation": "modify",
+          "description": "Ensure the store exposes clearAll (and optional per-transaction clear) to support Reset behavior and manual revert-to-Auto interactions without persisting anything to the backend. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

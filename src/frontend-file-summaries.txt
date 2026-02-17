@@ -1,0 +1,22 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, navigation header with active state indication, and layout wrapper for Cards, Transactions, and Settings pages.",
+  "frontend/src/pages/CardsManagerPage.tsx": "Cards management page displaying credit card list with add/edit/delete functionality and reset button to clear all transactions.",
+  "frontend/src/pages/TransactionsPage.tsx": "Transactions page displaying imported transactions table and export functionality for copying to spreadsheet.",
+  "frontend/src/pages/SettingsPage.tsx": "Settings page with tabbed interface for managing custom categories, category mappings, and CSV column configurations.",
+  "frontend/src/components/cards/CardFormDialog.tsx": "Reusable dialog component for adding and editing credit cards with name and color picker inputs.",
+  "frontend/src/components/cards/CardListItem.tsx": "Card display component showing card name, color indicator, upload status badge, and action buttons.",
+  "frontend/src/components/cards/StatementUploadButton.tsx": "CSV file upload button with validation, parsing, and backend submission for per-card statement imports.",
+  "frontend/src/components/transactions/TransactionsTable.tsx": "Transaction table displaying date, description, amount, category, derived Need/Want label with override indicators, and separate override controls for both category and Need/Want classification.",
+  "frontend/src/components/transactions/TransactionsExport.tsx": "Export panel with tab-separated text output including Need/Want column that reflects both category-derived and per-transaction overrides with one-click clipboard copy.",
+  "frontend/src/components/settings/CustomCategoriesManager.tsx": "UI for creating and managing custom expense categories with Need/Want toggle controls per category and initial classification during creation.",
+  "frontend/src/components/settings/CategoryMappingsEditor.tsx": "Interface for mapping card-provided categories to custom categories, updated to use CustomCategory objects instead of tuples.",
+  "frontend/src/components/settings/CsvMappingEditor.tsx": "Per-card CSV column mapping editor allowing users to specify which columns contain date, amount, category, and description.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including custom categories (now returning CustomCategory objects), category type updates, and reset flow that clears both category and need/want overrides.",
+  "frontend/src/state/uploadStatus.ts": "Zustand store managing per-card upload status (uploaded/not uploaded) as resettable UI state.",
+  "frontend/src/lib/csvImport.ts": "CSV parsing utility that reads files according to per-card column mappings and produces Transaction objects with category mapping.",
+  "frontend/src/lib/transactionsExport.ts": "Helper function formatting transactions into tab-separated text with category overrides and Need/Want values (derived or overridden).",
+  "frontend/src/index.css": "Global styles with OKLCH color system using emerald/teal primary colors (avoiding blue/purple) for a clean finance utility aesthetic.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom font families (Inter, JetBrains Mono), extended color tokens, and refined spacing/shadow utilities.",
+  "frontend/src/state/transactionCategoryOverrides.ts": "Zustand store managing temporary in-memory per-transaction category overrides with a deterministic transaction key generator and clearAll action.",
+  "frontend/src/state/transactionNeedWantOverrides.ts": "Zustand store managing temporary per-transaction Need/Want overrides with auto/need/want states, mirroring the category override pattern."
+}
